@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taller Interactivo: IA para la Productividad y Creatividad</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .nav-link {
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+        .nav-link.active {
+            border-bottom-color: #4f46e5;
+            color: #4338ca;
+        }
+        .dark .nav-link.active {
+            border-bottom-color: #818cf8;
+            color: #a5b4fc;
+        }
+        .section { display: none; }
+        .section.active { display: block; }
+        .code-block {
+            position: relative;
+            background-color: #1f2937;
+            color: #d1d5db;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            font-family: monospace;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-size: 0.875rem;
+        }
+        .copy-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background-color: #4b5563;
+            color: white;
+            border: none;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+        .copy-btn:hover { background-color: #6b7280; }
+        #threejs-container canvas {
+            width: 100% !important;
+            height: 400px !important;
+            border-radius: 0.5rem;
+        }
+        #d3-chart svg {
+            width: 100%;
+            height: auto;
+            max-height: 400px;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 transition-colors duration-300">
+
+    <div class="container mx-auto px-4 py-8">
+        <header class="text-center mb-10">
+            <h1 class="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white">Taller Interactivo de IA</h1>
+            <p class="mt-4 text-lg text-slate-600 dark:text-slate-400 max-w-3xl mx-auto">Herramientas prácticas para la productividad y el desarrollo creativo.</p>
+        </header>
+
+        <nav class="flex flex-wrap justify-center border-b border-slate-200 dark:border-slate-700 mb-8">
+            <button data-target="gemini" class="nav-link active px-4 py-3 text-lg font-medium">Canvas de Gemini</button>
+            <button data-target="colab" class="nav-link px-4 py-3 text-lg font-medium">IA & Google Colab</button>
+            <button data-target="visuals" class="nav-link px-4 py-3 text-lg font-medium">Visualizaciones Web</button>
+            <button data-target="advanced-tools" class="nav-link px-4 py-3 text-lg font-medium">Herramientas Avanzadas</button>
+            <button data-target="dashboard" class="nav-link px-4 py-3 text-lg font-medium">Dashboard de IAs</button>
+        </nav>
+
+        <main>
+            <!-- Sección Canvas de Gemini -->
+            <section id="gemini" class="section active">
+                <h2 class="text-3xl font-bold text-indigo-600 dark:text-indigo-400 mb-6 text-center">Potenciando Ideas con el Canvas de Gemini</h2>
+                <div class="space-y-8">
+                    <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-sm">
+                        <h3 class="text-2xl font-semibold mb-3">1. Organizar Información y Brainstorming</h3>
+                        <p class="text-slate-600 dark:text-slate-300 leading-relaxed">El Canvas de Gemini es un entorno conversacional e iterativo. Puedes usarlo para estructurar ideas complejas. Por ejemplo, para planificar este taller, podrías empezar con un prompt simple:</p>
+                        <div class="mt-4 p-4 bg-slate-100 dark:bg-slate-700 rounded-lg italic">
+                            "Actúa como un instructor experto en IA. Ayúdame a estructurar un taller de 2 horas sobre herramientas de IA prácticas. Los temas principales son: Gemini Canvas, ChatGPT + Google Colab, y visualizaciones web. Crea un esquema detallado con tiempos."
+                        </div>
+                        <p class="mt-4 text-slate-600 dark:text-slate-300 leading-relaxed">Gemini te devolverá una tabla o lista que puedes editar, refinar y ampliar directamente en la conversación, convirtiendo una idea inicial en un plan de acción concreto.</p>
+                    </div>
+                    <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-sm">
+                        <h3 class="text-2xl font-semibold mb-3">2. Crear Páginas Web Interactivas</h3>
+                        <p class="text-slate-600 dark:text-slate-300 leading-relaxed">Esta misma página fue creada con un solo prompt en el Canvas de Gemini. La clave es ser específico en tu petición. Puedes pedirle que use frameworks como Tailwind CSS y que incluya el HTML, CSS y JavaScript en un solo archivo para simplificar.</p>
+                        <div class="mt-4 p-4 bg-slate-100 dark:bg-slate-700 rounded-lg italic">
+                            "Crea una página web de una sola página con HTML, Tailwind CSS y JavaScript. Debe tener una navegación por pestañas para 5 secciones. Hazla interactiva y con un diseño moderno y limpio."
+                        </div>
+                        <p class="mt-4 text-slate-600 dark:text-slate-300 leading-relaxed"><span class="font-semibold">Subir a GitHub:</span> Una vez que tienes el archivo `.html`, puedes subirlo a un repositorio de GitHub. Luego, en la configuración del repositorio (Settings > Pages), activa "GitHub Pages" en la rama principal. ¡Tu web estará online en minutos y gratis!</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sección IA & Google Colab -->
+            <section id="colab" class="section">
+                <h2 class="text-3xl font-bold text-indigo-600 dark:text-indigo-400 mb-6 text-center">ChatGPT + Google Colab: Un Dúo Poderoso</h2>
+                <div class="space-y-8">
+                    <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-sm">
+                        <h3 class="text-2xl font-semibold mb-3">1. Gráficos con Python</h3>
+                        <p class="text-slate-600 dark:text-slate-300 leading-relaxed">Pídele a ChatGPT el código exacto para una visualización. Puedes ser muy específico sobre el tipo de gráfico, los colores y los datos. Luego, copia y pega el código en una celda de Google Colab.</p>
+                         <div class="mt-4 p-4 bg-slate-100 dark:bg-slate-700 rounded-lg italic">
+                            "Dame el código en Python usando Matplotlib y Pandas para crear un gráfico de barras. Los datos son: {'IA': ['ChatGPT', 'Midjourney', 'Suno'], 'Usuarios (Millones)': [180, 16, 10]}. El gráfico debe tener un título, etiquetas en los ejes y barras de color azul."
+                        </div>
+                        <p class="mt-4 text-slate-600 dark:text-slate-300 leading-relaxed font-semibold">Código para Google Colab:</p>
+                        <div class="code-block mt-2">
+                            <button class="copy-btn">Copiar</button>
+                            <code>
+import pandas as pd
+import matplotlib.pyplot as plt
+
+data = {'IA': ['ChatGPT', 'Midjourney', 'Suno'],'Usuarios (Millones)': [180, 16, 10]}
+df = pd.DataFrame(data)
+
+plt.figure(figsize=(10, 6))
+plt.bar(df['IA'], df['Usuarios (Millones)'], color='skyblue')
+plt.title('Crecimiento de Usuarios de Plataformas de IA', fontsize=16)
+plt.xlabel('Plataforma de IA', fontsize=12)
+plt.ylabel('Usuarios (Millones)', fontsize=12)
+plt.show()
+                            </code>
+                        </div>
+                    </div>
+                    <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-sm">
+                        <h3 class="text-2xl font-semibold mb-3">2. Transcripción de Audio con Whisper</h3>
+                        <p class="text-slate-600 dark:text-slate-300 leading-relaxed">Whisper de OpenAI es un modelo increíblemente preciso para transcribir audio. Pídele a ChatGPT el código para usarlo en Colab. Nota: Necesitarás subir un archivo de audio a tu entorno de Colab.</p>
+                        <div class="mt-2 p-4 bg-slate-100 dark:bg-slate-700 rounded-lg italic">
+                             "Necesito un script de Python para Google Colab que use el modelo Whisper de OpenAI para transcribir un archivo de audio llamado 'mi_audio.mp3'. Incluye los comandos de instalación necesarios."
+                        </div>
+                        <p class="mt-4 text-slate-600 dark:text-slate-300 leading-relaxed font-semibold">Código para Google Colab:</p>
+                        <div class="code-block mt-2">
+                            <button class="copy-btn">Copiar</button>
+                            <code>
+# 1. Instalar las librerías necesarias
+!pip install git+https://github.com/openai/whisper.git
+!pip install ffmpeg-python
+
+# 2. Importar y cargar el modelo
+import whisper
+model = whisper.load_model("base") # 'base' es rápido, 'large' es más preciso
+
+# 3. Sube tu archivo 'mi_audio.mp3' al entorno de Colab
+
+# 4. Transcribir el audio y mostrar el resultado
+result = model.transcribe("mi_audio.mp3")
+print(result["text"])
+                            </code>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sección Visualizaciones Web -->
+            <section id="visuals" class="section">
+                 <h2 class="text-3xl font-bold text-indigo-600 dark:text-indigo-400 mb-6 text-center">Creación de Visualizaciones Web con IA</h2>
+                 <div class="space-y-8">
+                    <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-sm">
+                        <h3 class="text-2xl font-semibold mb-3">1. Diagramas desde Texto con Mermaid.js</h3>
+                        <p class="text-slate-600 dark:text-slate-300 leading-relaxed mb-2">Mermaid.js es una potente librería que te permite crear diagramas y flujogramas complejos escribiendo texto simple, similar a Markdown. Es ideal para documentar procesos rápidamente.</p>
+                        <p class="text-slate-600 dark:text-slate-300 leading-relaxed">Pídele a ChatGPT o Gemini que genere la sintaxis de Mermaid para el proceso que quieras visualizar. Luego, solo tienes que pegar ese código en una página web que tenga la librería de Mermaid.</p>
+                         <div class="mt-4 p-4 bg-slate-100 dark:bg-slate-700 rounded-lg italic">
+                           "Crea la sintaxis de Mermaid.js para un diagrama de flujo que muestre el proceso: 1. Idea Inicial, 2. Prompt a IA, 3. Recibir Código, 4. Probar y depurar, 5. Publicar."
+                        </div>
+                        <p class="mt-4 text-slate-600 dark:text-slate-300 leading-relaxed font-semibold">Diagrama Resultante:</p>
+                        <div class="mt-2 p-4 flex justify-center bg-slate-100 dark:bg-slate-700 rounded-lg">
+                           <pre class="mermaid">
+graph TD
+    A[Idea Inicial] --> B{Prompt a IA}
+    B --> C[Recibir Código]
+    C --> D{Probar y Depurar}
+    D -- Bucle de Iteración --> B
+    D -- Finalizado --> E[Publicar]
+                           </pre>
+                        </div>
+                    </div>
+                     <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-sm">
+                        <h3 class="text-2xl font-semibold mb-3">2. Gráficos de Datos con D3.js</h3>
+                        <p class="text-slate-600 dark:text-slate-300 leading-relaxed mb-2">D3.js (Data-Driven Documents) es el estándar de oro para la visualización de datos en la web. Te da un control total para crear gráficos interactivos y personalizados a partir de tus datos.</p>
+                        <p class="text-slate-600 dark:text-slate-300 leading-relaxed">Pídele a Gemini que te genere un archivo HTML completo que use D3 para visualizar un conjunto de datos específico. Puedes pedirle que el gráfico sea interactivo o que tenga animaciones.</p>
+                        <div class="mt-4 p-4 bg-slate-100 dark:bg-slate-700 rounded-lg italic">
+                            "Crea el código para una página HTML con un script de D3.js que genere un gráfico de barras simple con datos de ejemplo. El gráfico debe ser responsive."
+                        </div>
+                        <p class="mt-4 text-slate-600 dark:text-slate-300 leading-relaxed font-semibold">Visualización D3.js Resultante:</p>
+                        <div id="d3-chart" class="mt-2 p-4 bg-slate-100 dark:bg-slate-700 rounded-lg"></div>
+                    </div>
+                     <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-sm">
+                        <h3 class="text-2xl font-semibold mb-3">3. Mundos 3D con Three.js</h3>
+                        <p class="text-slate-600 dark:text-slate-300 leading-relaxed mb-2">Three.js simplifica enormemente la creación de gráficos y animaciones 3D en el navegador usando WebGL. Es perfecto para juegos, visualizaciones de productos o experiencias inmersivas.</p>
+                        <p class="text-slate-600 dark:text-slate-300 leading-relaxed">Describe la escena 3D que imaginas a Gemini. Pide que incluya objetos, luces, materiales y animaciones. Gemini puede generar todo el código necesario para que funcione.</p>
+                         <div class="mt-4 p-4 bg-slate-100 dark:bg-slate-700 rounded-lg italic">
+                            "Genérame una página HTML completa con un script de Three.js que muestre un cubo 3D de color púrpura rotando en el centro de la escena."
+                        </div>
+                        <p class="mt-4 text-slate-600 dark:text-slate-300 leading-relaxed font-semibold">Animación 3D Resultante:</p>
+                        <div id="threejs-container" class="mt-2 w-full h-96 bg-slate-100 dark:bg-slate-700 rounded-lg"></div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Sección Herramientas Avanzadas -->
+            <section id="advanced-tools" class="section">
+                 <h2 class="text-3xl font-bold text-indigo-600 dark:text-indigo-400 mb-6 text-center">Explorando Herramientas Avanzadas</h2>
+                 <div class="space-y-8">
+                    <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-sm">
+                        <h3 class="text-2xl font-semibold mb-3">1. Generación de Imágenes con Imagen 2 Flash (Nano-banana)</h3>
+                        <p class="text-slate-600 dark:text-slate-300 leading-relaxed">Dentro de Gemini, puedes generar imágenes directamente desde la conversación. Este modelo es rápido y potente para crear visuales a partir de texto.</p>
+                         <div class="mt-2 p-4 bg-slate-100 dark:bg-slate-700 rounded-lg italic">
+                           "Genera una imagen de un astronauta programando en una laptop en la superficie de Marte, estilo arte digital, con colores vibrantes."
+                        </div>
+                        <p class="mt-4 text-slate-600 dark:text-slate-300 leading-relaxed">Gemini procesará esta petición y te entregará una imagen directamente en el chat, la cual puedes descargar o refinar con más instrucciones.</p>
+                    </div>
+                     <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-sm">
+                        <h3 class="text-2xl font-semibold mb-3">2. Creación de Guías de Estudio con NotebookLM</h3>
+                        <p class="text-slate-600 dark:text-slate-300 leading-relaxed">NotebookLM es una herramienta de Google diseñada para investigar y tomar notas sobre tus propios documentos. Es como tener un asistente de investigación personalizado.</p>
+                        <p class="mt-4 text-slate-600 dark:text-slate-300 leading-relaxed font-semibold">¿Cómo usarlo?</p>
+                        <ol class="list-decimal list-inside mt-2 space-y-2 text-slate-600 dark:text-slate-300">
+                            <li>Ve a <a href="https://notebooklm.google.com" target="_blank" class="text-indigo-500 hover:underline">NotebookLM</a> y crea un nuevo "cuaderno".</li>
+                            <li>Añade tus fuentes: puedes subir archivos PDF, de texto, copiar texto o conectar tu Google Drive.</li>
+                            <li>Una vez cargadas las fuentes, puedes hacerle preguntas a la IA sobre el contenido, pedirle que te genere resúmenes, una guía de estudio, una línea de tiempo o que identifique los conceptos clave.</li>
+                            <li>La IA solo responderá basándose en los documentos que tú le has proporcionado, garantizando que la información sea relevante y precisa para tu contexto.</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sección Dashboard de IAs -->
+            <section id="dashboard" class="section">
+                 <h2 class="text-3xl font-bold text-indigo-600 dark:text-indigo-400 mb-6 text-center">Dashboard Interactivo de IAs</h2>
+                 <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-sm mb-8">
+                     <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
+                         <div>
+                             <label for="searchInput" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Buscar por nombre o uso:</label>
+                             <input type="text" id="searchInput" placeholder="Ej: video, análisis de datos..." class="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-900 dark:text-slate-200 placeholder-slate-400 dark:placeholder-slate-500">
+                         </div>
+                         <div>
+                             <label for="categoryFilter" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Categoría:</label>
+                             <select id="categoryFilter" class="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-900 dark:text-slate-200"></select>
+                         </div>
+                         <div>
+                             <label for="pricingFilter" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Modelo de Precios:</label>
+                             <select id="pricingFilter" class="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-900 dark:text-slate-200"></select>
+                         </div>
+                     </div>
+                 </div>
+                 <div id="ai-grid-container" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                     <!-- Las tarjetas de IA se insertarán aquí -->
+                 </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- NAVEGACIÓN POR PESTAÑAS ---
+        const navLinks = document.querySelectorAll('.nav-link');
+        const sections = document.querySelectorAll('.section');
+        let visualsInitialized = false;
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                const targetId = link.getAttribute('data-target');
+                navLinks.forEach(nav => nav.classList.remove('active'));
+                link.classList.add('active');
+                sections.forEach(section => {
+                    section.classList.toggle('active', section.id === targetId);
+                });
+                if (targetId === 'visuals' && !visualsInitialized) {
+                    initVisuals();
+                    visualsInitialized = true;
+                }
+            });
+        });
+
+        // --- BOTONES DE COPIAR CÓDIGO ---
+        document.querySelectorAll('.copy-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const code = button.nextElementSibling.textContent;
+                // Fallback for environments that block navigator.clipboard
+                const textArea = document.createElement("textarea");
+                textArea.value = code;
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    button.textContent = '¡Copiado!';
+                } catch (err) {
+                    console.error('No se pudo copiar el texto: ', err);
+                    button.textContent = 'Error';
+                }
+                document.body.removeChild(textArea);
+
+                setTimeout(() => {
+                    button.textContent = 'Copiar';
+                }, 2000);
+            });
+        });
+
+        // --- INICIALIZACIÓN DE MERMAID ---
+        const isDark = document.documentElement.classList.contains('dark');
+        mermaid.initialize({ 
+            startOnLoad: true, 
+            theme: isDark ? 'dark' : 'default' 
+        });
+
+        function initVisuals() {
+            // Reprocesar Mermaid si es necesario
+            mermaid.run({
+                querySelector: '.mermaid'
+            });
+
+            // --- GRÁFICO D3.JS ---
+            const d3Data = [
+                { name: "Texto", value: 10 }, { name: "Imagen", value: 8 },
+                { name: "Código", value: 9 }, { name: "Audio", value: 6 },
+                { name: "Video", value: 7 }, { name: "3D", value: 5 }
+            ];
+            const d3Container = document.getElementById('d3-chart');
+            const width = d3Container.clientWidth;
+            const height = 300;
+            const margin = { top: 20, right: 20, bottom: 40, left: 40 };
+
+            const svg = d3.select("#d3-chart").append("svg")
+                .attr("viewBox", `0 0 ${width} ${height}`)
+                .attr("preserveAspectRatio", "xMidYMid meet");
+
+            const x = d3.scaleBand()
+                .domain(d3Data.map(d => d.name))
+                .range([margin.left, width - margin.right])
+                .padding(0.1);
+
+            const y = d3.scaleLinear()
+                .domain([0, d3.max(d3Data, d => d.value)])
+                .nice()
+                .range([height - margin.bottom, margin.top]);
+
+            svg.append("g")
+                .attr("fill", "#4f46e5")
+                .selectAll("rect")
+                .data(d3Data)
+                .join("rect")
+                .attr("x", d => x(d.name))
+                .attr("y", d => y(d.value))
+                .attr("height", d => y(0) - y(d.value))
+                .attr("width", x.bandwidth());
+
+            svg.append("g")
+                .attr("transform", `translate(0,${height - margin.bottom})`)
+                .call(d3.axisBottom(x))
+                .selectAll("text")
+                .attr("fill", document.documentElement.classList.contains('dark') ? "#a5b4fc" : "#4338ca");
+
+            svg.append("g")
+                .attr("transform", `translate(${margin.left},0)`)
+                .call(d3.axisLeft(y))
+                .selectAll("text")
+                .attr("fill", document.documentElement.classList.contains('dark') ? "#a5b4fc" : "#4338ca");
+
+            // --- ANIMACIÓN THREE.JS ---
+            const scene = new THREE.Scene();
+            const container = document.getElementById('threejs-container');
+            const aspect = container.clientWidth / 400;
+            const camera = new THREE.PerspectiveCamera(75, aspect, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(container.clientWidth, 400);
+            container.appendChild(renderer.domElement);
+
+            const geometry = new THREE.BoxGeometry();
+            const material = new THREE.MeshStandardMaterial({ color: 0x818cf8 });
+            const cube = new THREE.Mesh(geometry, material);
+            scene.add(cube);
+
+            const light = new THREE.DirectionalLight(0xffffff, 1);
+            light.position.set(5, 5, 5);
+            scene.add(light);
+            scene.add(new THREE.AmbientLight(0x404040));
+            
+            camera.position.z = 3;
+
+            function animate() {
+                requestAnimationFrame(animate);
+                cube.rotation.x += 0.01;
+                cube.rotation.y += 0.01;
+                renderer.render(scene, camera);
+            }
+            animate();
+        }
+        
+        // --- DASHBOARD DE IAS ---
+        const aiData = [
+            // Modelos de Lenguaje
+            { name: "ChatGPT (GPT-4o)", category: "Modelo de Lenguaje", pricing: "Freemium", use: "Conversación multimodal, redacción, análisis de datos, resolución de problemas complejos.", link: "https://chat.openai.com" },
+            { name: "Gemini 1.5 Pro", category: "Modelo de Lenguaje", pricing: "Freemium", use: "Búsqueda multimodal, gran ventana de contexto, integración con el ecosistema de Google.", link: "https://gemini.google.com" },
+            { name: "Claude 3 Opus", category: "Modelo de Lenguaje", pricing: "De Pago", use: "Análisis de documentos largos, redacción con un tono más humano, alta precisión.", link: "https://claude.ai" },
+            { name: "Perplexity", category: "Modelo de Lenguaje", pricing: "Freemium", use: "Búsquedas e investigación con fuentes citadas, ideal para académicos y periodistas.", link: "https://www.perplexity.ai" },
+            { name: "Mistral Large", category: "Modelo de Lenguaje", pricing: "De Pago", use: "Alto rendimiento en razonamiento y capacidades multilingües, para empresas.", link: "https://mistral.ai" },
+            { name: "Llama 3", category: "Modelo de Lenguaje", pricing: "Open Source", use: "Desarrollo de aplicaciones personalizadas, investigación y experimentación.", link: "https://llama.meta.com/" },
+            { name: "Grok", category: "Modelo de Lenguaje", pricing: "De Pago", use: "Acceso a información en tiempo real de la red X, respuestas con un toque de humor.", link: "https://grok.x.ai" },
+            { name: "DeepSeek-V2", category: "Modelo de Lenguaje", pricing: "Open Source", use: "Modelo de lenguaje open-source con un alto rendimiento a un coste computacional bajo.", link: "https://www.deepseek.com" },
+            { name: "Qwen", category: "Modelo de Lenguaje", pricing: "Open Source", use: "Modelos versátiles (texto, imagen, audio) para desarrollo e investigación.", link: "https://qwen.aliyun.com" },
+            { name: "Jasper", category: "Modelo de Lenguaje", pricing: "De Pago", use: "Redacción de marketing y contenido optimizado para SEO, enfocado en empresas.", link: "https://www.jasper.ai/" },
+            { name: "Poe by Quora", category: "Modelo de Lenguaje", pricing: "Freemium", use: "Acceso a múltiples modelos de IA (ChatGPT, Claude, etc.) desde una sola interfaz.", link: "https://poe.com/" },
+            { name: "Character.ai", category: "Modelo de Lenguaje", pricing: "Freemium", use: "Crear y conversar con personajes de IA, tanto ficticios como basados en personas reales.", link: "https://character.ai/" },
+            
+            // Generadores de Imagen
+            { name: "Midjourney", category: "Generador de Imagen", pricing: "De Pago", use: "Creación de imágenes artísticas y fotorrealistas de muy alta calidad.", link: "https://www.midjourney.com" },
+            { name: "DALL-E 3", category: "Generador de Imagen", pricing: "De Pago", use: "Integrado en ChatGPT Plus, fácil de usar para generar imágenes detalladas desde texto.", link: "https://openai.com/dall-e-3" },
+            { name: "Stable Diffusion 3", category: "Generador de Imagen", pricing: "Open Source", use: "Máxima personalización y control local para artistas y desarrolladores.", link: "https://stability.ai" },
+            { name: "Adobe Firefly", category: "Generador de Imagen", pricing: "Freemium", use: "Generación de imágenes seguras para uso comercial, integrado en el ecosistema Adobe.", link: "https://www.adobe.com/sensei/generative-ai/firefly.html" },
+            { name: "Ideogram", category: "Generador de Imagen", pricing: "Freemium", use: "Excelente para generar imágenes que incluyen texto de forma coherente.", link: "https://ideogram.ai" },
+            { name: "Leonardo.Ai", category: "Generador de Imagen", pricing: "Freemium", use: "Creación de assets para videojuegos, arte conceptual y diseño de personajes.", link: "https://leonardo.ai" },
+            { name: "Magnific AI", category: "Generador de Imagen", pricing: "De Pago", use: "Mejora y re-imagina la resolución y el detalle de las imágenes de forma asombrosa.", link: "https://magnific.ai/" },
+            { name: "Krea AI", category: "Generador de Imagen", pricing: "Freemium", use: "Generación de imágenes y patrones en tiempo real, muy útil para la creatividad y el diseño.", link: "https://www.krea.ai/" },
+            { name: "Spline AI", category: "Generador de Imagen", pricing: "Freemium", use: "Generación y texturizado de objetos y escenas 3D a partir de texto o imágenes.", link: "https://spline.design/" },
+
+            // Generadores de Video
+            { name: "Sora", category: "Generador de Video", pricing: "De Pago", use: "Generación de vídeos fotorrealistas de alta calidad a partir de texto (acceso limitado).", link: "https://openai.com/sora" },
+            { name: "Luma AI (Dream Machine)", category: "Generador de Video", pricing: "Freemium", use: "Generación de vídeo de alta calidad a partir de texto e imágenes.", link: "https://lumalabs.ai/dream-machine" },
+            { name: "Pika", category: "Generador de Video", pricing: "Freemium", use: "Creación de vídeos cortos y animados a partir de texto o imágenes.", link: "https://pika.art" },
+            { name: "Runway", category: "Generador de Video", pricing: "Freemium", use: "Suite completa de edición de vídeo con herramientas de IA (texto a vídeo, inpainting, etc.).", link: "https://runwayml.com" },
+            { name: "Synthesia", category: "Generador de Video", pricing: "De Pago", use: "Creación de vídeos profesionales con avatares de IA realistas en minutos.", link: "https://www.synthesia.io/" },
+            { name: "HeyGen", category: "Generador de Video", pricing: "Freemium", use: "Creación de vídeos con avatares parlantes y traducción de vídeo a otros idiomas.", link: "https://www.heygen.com/" },
+            { name: "VEED.IO", category: "Generador de Video", pricing: "Freemium", use: "Suite de edición de video online con herramientas de IA como subtítulos y eliminación de fondo.", link: "https://www.veed.io/" },
+
+            // Generadores de Audio/Música
+            { name: "Suno", category: "Generador de Audio/Música", pricing: "Freemium", use: "Creación de canciones completas (letra, música y voz) a partir de una descripción.", link: "https://www.suno.ai/" },
+            { name: "Udio", category: "Generador de Audio/Música", pricing: "Freemium", use: "Generación de música de alta calidad en diversos géneros y estilos.", link: "https://www.udio.com/" },
+            { name: "ElevenLabs", category: "Generador de Audio/Música", pricing: "Freemium", use: "Clonación de voz y generación de audio ultrarrealista para creadores de contenido.", link: "https://elevenlabs.io" },
+            
+            // Asistentes de Código
+            { name: "GitHub Copilot", category: "Asistente de Código", pricing: "De Pago", use: "Autocompletado de código inteligente, integrado en los principales editores de código.", link: "https://github.com/features/copilot" },
+            { name: "Phind", category: "Asistente de Código", pricing: "Freemium", use: "Motor de búsqueda para desarrolladores que ofrece respuestas técnicas con ejemplos de código.", link: "https://www.phind.com" },
+            { name: "DeepSeek Coder", category: "Asistente de Código", pricing: "Open Source", use: "Generación y completado de código en múltiples lenguajes de programación.", link: "https://www.deepseek.com" },
+
+            // Automatización
+            { name: "Make", category: "Automatización", pricing: "Freemium", use: "Automatización visual de flujos de trabajo conectando cientos de aplicaciones.", link: "https://www.make.com" },
+            { name: "n8n", category: "Automatización", pricing: "Open Source", use: "Alternativa open-source a Make/Zapier para automatizar tareas, auto-hospedable.", link: "https://n8n.io" },
+            { name: "Zapier", category: "Automatización", pricing: "Freemium", use: "Plataforma líder para conectar aplicaciones y automatizar tareas repetitivas.", link: "https://zapier.com" },
+
+            // Productividad
+            { name: "Copy.ai", category: "Productividad", pricing: "Freemium", use: "Generador de textos especializado en marketing, ventas y contenido para redes sociales.", link: "https://www.copy.ai/" },
+            { name: "Notion AI", category: "Productividad", pricing: "De Pago", use: "Asistente integrado en Notion para resumir, redactar y organizar notas y documentos.", link: "https://www.notion.so/product/ai" },
+            { name: "Gamma", category: "Productividad", pricing: "Freemium", use: "Creación de presentaciones, documentos y webs a partir de texto de forma automática.", link: "https://gamma.app" },
+            { name: "Tome", category: "Productividad", pricing: "Freemium", use: "Generación de narrativas visuales y presentaciones interactivas con IA.", link: "https://tome.app" },
+            { name: "Consensus", category: "Productividad", pricing: "Freemium", use: "Motor de búsqueda que usa IA para extraer hallazgos directamente de investigaciones científicas.", link: "https://consensus.app/" },
+            { name: "Otter.ai", category: "Productividad", pricing: "Freemium", use: "Transcripción de reuniones en tiempo real con resúmenes automáticos.", link: "https://otter.ai" },
+            { name: "DeepL", category: "Productividad", pricing: "Freemium", use: "Traducción automática de alta calidad con un matiz muy natural.", link: "https://www.deepl.com/" },
+            { name: "Fireflies.ai", category: "Productividad", pricing: "Freemium", use: "Asistente de IA para reuniones que graba, transcribe y analiza conversaciones de voz.", link: "https://fireflies.ai/" },
+            { name: "ClickUp AI", category: "Productividad", pricing: "De Pago", use: "Herramienta de IA integrada en la plataforma de gestión de proyectos ClickUp.", link: "https://clickup.com/ai" },
+            { name: "NotebookLM", category: "Productividad", pricing: "Gratis", use: "Asistente de investigación personal que razona sobre tus fuentes (PDFs, Drive, etc.).", link: "https://notebooklm.google.com" },
+            { name: "Descript", category: "Productividad", pricing: "Freemium", use: "Edición de audio y vídeo tan fácil como editar un documento, con transcripción y clonación de voz.", link: "https://www.descript.com/" },
+            
+            // Plataformas de Desarrollo
+            { name: "Framer AI", category: "Plataforma de Desarrollo", pricing: "Freemium", use: "Diseña y publica sitios web profesionales a partir de descripciones de texto, sin código.", link: "https://www.framer.com/ai" },
+            { name: "Google Colab", category: "Plataforma de Desarrollo", pricing: "Freemium", use: "Entorno de notebooks de Python en la nube para experimentar con IA y machine learning.", link: "https://colab.research.google.com" },
+            { name: "Hugging Face", category: "Plataforma de Desarrollo", pricing: "Freemium", use: "Comunidad y plataforma para construir, entrenar y desplegar modelos de IA.", link: "https://huggingface.co" }
+        ];
+
+        const gridContainer = document.getElementById('ai-grid-container');
+        const searchInput = document.getElementById('searchInput');
+        const categoryFilter = document.getElementById('categoryFilter');
+        const pricingFilter = document.getElementById('pricingFilter');
+
+        const categories = ['Todas', ...new Set(aiData.map(item => item.category))];
+        const pricings = ['Todos', ...new Set(aiData.map(item => item.pricing))];
+
+        categories.forEach(cat => categoryFilter.innerHTML += `<option value="${cat}">${cat}</option>`);
+        pricings.forEach(price => pricingFilter.innerHTML += `<option value="${price}">${price}</option>`);
+
+        const renderCards = (data) => {
+            gridContainer.innerHTML = '';
+            if (data.length === 0) {
+                 gridContainer.innerHTML = `<p class="text-center col-span-full py-8 text-slate-500 dark:text-slate-400">No se encontraron resultados para tu búsqueda.</p>`;
+                 return;
+            }
+            data.forEach(ai => {
+                const card = document.createElement('div');
+                card.className = 'bg-white dark:bg-slate-800 rounded-lg shadow-md p-6 flex flex-col transition-transform duration-300 hover:scale-105';
+                card.innerHTML = `
+                    <div class="flex-grow">
+                        <h4 class="font-bold text-lg text-slate-900 dark:text-white">${ai.name}</h4>
+                        <span class="text-xs font-semibold uppercase text-indigo-500 dark:text-indigo-400">${ai.pricing}</span>
+                        <p class="text-slate-600 dark:text-slate-400 mt-2 text-sm">${ai.use}</p>
+                    </div>
+                    <a href="${ai.link}" target="_blank" class="mt-4 self-start font-medium text-indigo-600 hover:underline dark:text-indigo-400">
+                        Visitar →
+                    </a>`;
+                gridContainer.appendChild(card);
+            });
+        };
+        
+        const filterData = () => {
+            const searchTerm = searchInput.value.toLowerCase();
+            const category = categoryFilter.value;
+            const pricing = pricingFilter.value;
+
+            const filtered = aiData.filter(ai => {
+                const searchMatch = ai.name.toLowerCase().includes(searchTerm) || ai.use.toLowerCase().includes(searchTerm);
+                const categoryMatch = category === 'Todas' || ai.category === category;
+                const pricingMatch = pricing === 'Todos' || ai.pricing === pricing;
+                return searchMatch && categoryMatch && pricingMatch;
+            });
+            renderCards(filtered);
+        };
+
+        searchInput.addEventListener('input', filterData);
+        categoryFilter.addEventListener('change', filterData);
+        pricingFilter.addEventListener('change', filterData);
+
+        renderCards(aiData);
+    });
+    </script>
+</body>
+</html>
